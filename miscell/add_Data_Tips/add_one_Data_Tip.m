@@ -1,5 +1,5 @@
 % M.Ciacci, 24/09/2019
-function add_one_Data_Tip( x0 , h_curve, fontSize)
+function add_one_Data_Tip( x0 , h_curve, tipAxis, fontSize)
     % ADD_ONE_DATA_TIP( x0 , h_curve, fontSize)
     % Creates a data tip at location x0,f(x0) where f(x) is defined by xy data in h_curve
     %
@@ -8,12 +8,24 @@ function add_one_Data_Tip( x0 , h_curve, fontSize)
     % h_curve    = a single Line handle
     % sel_x_val  = x value where data tip is requested
     %
+    % axis       = 'x'/'y'/'xz'
+    %
     % EXAMPLE:
     % figure(); p_h = plot(0:10,(0:10).^2,'b'); add_one_Data_Tip( 4.5 , p_h, 16)
+    if nargin<3
+        tipAxis='xy';
+        fontSize=11;
+    elseif nargin<4
+        fontSize=11;
+    end
+    
+    if isempty(tipAxis) || ~ischar(tipAxis)
+        tipAxis='xy';
+    end
     
     % retrieve the datacursor manager
     cursorMode = datacursormode(gcf);
-    set(cursorMode, 'UpdateFcn',@customDatatipFunction);
+    set(cursorMode, 'UpdateFcn',{@customDatatipFunction,tipAxis});
     
     % create a tip somewhere
     h_Dtip = cursorMode.createDatatip(h_curve) ;
@@ -58,15 +70,17 @@ function add_one_Data_Tip( x0 , h_curve, fontSize)
     
     
     % no tip properties changing allowed in here, would risk to crash as well
-    function output_txt = customDatatipFunction(~,evt)
+    function output_txt = customDatatipFunction(~,evt,tipAxis)
     pos = get(evt,'Position');
     
-    output_txt = { 
-    ['X = ',sprintf('%6.2g',pos(1))] ;
-    ['Y = ',sprintf('%7.3g',pos(2))] };        
+    output_txt{1} = ['X = ',sprintf('%7.3g',pos(1))] ; 
+    
+    output_txt{2} = ['Y = ',sprintf('%7.3g',pos(2))] ;  
+    
+    output_txt=output_txt(ismember('xy',tipAxis));
     
     % check if there is a Z-coordinate, if so display that too
-    if length(pos) > 2
+    if length(pos) > 2 && ismember('z',tipAxis)
         output_txt{end+1} = ['Z: ',num2str(pos(3),3)];
     end    
     % e.g. this would cause the error 
