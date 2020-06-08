@@ -18,7 +18,7 @@ end
 dopo=prima;
 
 for qui=1:length(prima)
-    if ismember(prima(qui),' -,;:/!"£$%&/()=?^|*+[]#')
+    if ismember(prima(qui),' -,;:/!"£$%&/()=?^|*+[]#.')
         dopo(qui)='_';
     end
 end

@@ -17,10 +17,13 @@ numfigs = size(hands,1);        % number of open figures
 
 for i_fig=1:numfigs
     if isempty(ext)
-        savefig(hands(i_fig),[save_folder,filesep,hands(i_fig).Name,'_',datestr(datetime,'yyyymmdd_HHMMSS')],'compact')
+        
+        
+        
+        savefig(hands(i_fig),[save_folder,filesep,correct_name(hands(i_fig).Name),'_',datestr(datetime,'yyyymmdd_HHMMSS')],'compact')
     else
         try
-            saveas(hands(i_fig),[save_folder,filesep,hands(i_fig).Name,'_',datestr(datetime,'yyyymmdd_HHMMSS')],ext)
+            saveas(hands(i_fig),[save_folder,filesep,correct_name(hands(i_fig).Name),'_',datestr(datetime,'yyyymmdd_HHMMSS')],ext)
         catch
             warning('Extension not valid. /n Function interrupted')
             return
