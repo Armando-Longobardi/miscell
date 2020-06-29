@@ -8,7 +8,7 @@ function add_one_Data_Tip( x0 , h_curve, tipAxis, fontSize)
     % h_curve    = a single Line handle
     % sel_x_val  = x value where data tip is requested
     %
-    % axis       = 'x'/'y'/'xz'
+    % tipAxis       = 'x'/'y'/'xz'
     %
     % EXAMPLE:
     % figure(); p_h = plot(0:10,(0:10).^2,'b'); add_one_Data_Tip( 4.5 , p_h, 16)
