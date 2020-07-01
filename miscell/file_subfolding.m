@@ -1,4 +1,10 @@
-function file_subfolding(dir_in,n_split,delimiter)
+function file_subfolding(dir_in,n_split,delimiter,dir_exclusion)
+
+
+
+
+
+
 
 if nargin<1
     dir_in=uigetdir();
@@ -16,7 +22,13 @@ end
 if nargin<3
     delimiter='_';
 end
+if nargin<4
+    dir_exclusion=true;
+end
 
+if dir_exclusion
+    dir_out([dir_out.isdir]) = [];
+end
 
 
 pippo=cellfun(@(x) regexp(x,delimiter,'split'),{dir_out.name},'UniformOutput',0);
