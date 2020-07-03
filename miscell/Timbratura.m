@@ -7,10 +7,12 @@ mouse = Robot;
 system('start iexplore http://lynda.it.pirelli.com:8112/irj/portal','-echo')
 pause(5)
 % elimina banner fine mese
-mouse.mouseMove(1348, 95);
-mouse.mousePress(InputEvent.BUTTON1_MASK);
-mouse.mouseRelease(InputEvent.BUTTON1_MASK);
-pause(1)
+if day(datetime('today'))>=20    
+    mouse.mouseMove(1348, 95);
+    mouse.mousePress(InputEvent.BUTTON1_MASK);
+    mouse.mouseRelease(InputEvent.BUTTON1_MASK);
+    pause(1)
+end
 % apri menù a tendina
 mouse.mouseMove(45, 104);
 pause(2)
