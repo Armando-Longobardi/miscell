@@ -16,7 +16,9 @@ for iInput= 1:2:numel(varargin)
         case 'SaveAs'
             ext=varargin{iInput+1};
         case 'NameAs'
+            
             nameOpt=validatestring(varargin{iInput+1},{'figName','Title'});
+            
         case 'CorrectName'
             corrName=varargin{iInput+1};
     end
@@ -27,7 +29,7 @@ hands   = sort(hands);          % sort figure handles
 numfigs = size(hands,1);        % number of open figures
 
 for i_fig=1:numfigs
-    if isempty(ext)
+    
         switch nameOpt
             case 'figName'
                 partial_name=hands(i_fig).Name;
@@ -35,6 +37,7 @@ for i_fig=1:numfigs
                 Axs=findobj(hands(i_fig),'Type','Axes');
                 partial_name=Axs.Title.String';
                 partial_name=regexprep(partial_name(:)',' *','_');
+            
         end
         
         if corrName
@@ -44,11 +47,11 @@ for i_fig=1:numfigs
         figname=[save_folder,filesep,partial_name,'_',datestr(datetime,'yyyymmdd_HHMMSS')];
                 
         
-        
+    if isempty(ext)    
         savefig(hands(i_fig),figname,'compact')
     else
         try
-            saveas(hands(i_fig),[save_folder,filesep,correct_name(hands(i_fig).Name,50),'_',datestr(datetime,'yyyymmdd_HHMMSS')],ext)
+            saveas(hands(i_fig),figname,ext)
         catch
             warning('Extension not valid. /n Function interrupted')
             return
