@@ -1,4 +1,4 @@
-function ButtonName=MFquestdlg(Pos,Question,Title,Btn1,Btn2,Btn3,Default)
+function ButtonName=MFquestdlg(Pos,Question,Title,Btn1,Btn2,Btn3,Default,WindowStyle)
 % MFQUESTDLG Question dialog box.
 % ----------------------------------------------------------------------- 
 %  --------------------- Modified Function Help ----------------------
@@ -107,15 +107,21 @@ end
 if nargin==2,Title=' ';end
 if nargin<=3, Default='Yes';end
 if nargin==4, Default=Btn1 ;end
-if nargin<=4, Btn1='Yes'; Btn2='No'; Btn3='Cancel';NumButtons=3;end
+if nargin<=4 || isempty(Btn1), Btn1='Yes'; Btn2='No'; Btn3='Cancel';NumButtons=3;end
 if nargin==5, Default=Btn2;Btn2=[];Btn3=[];NumButtons=1;end
 if nargin==6, Default=Btn3;Btn3=[];NumButtons=2;end
 if nargin==7, NumButtons=3;end
-if nargin>7
+if nargin==8 
+    WindowStyle=validatestring(WindowStyle, {'normal', 'modal', 'docked'});
+end
+if nargin>8
   error('MATLAB:questdlg:TooManyInputs', 'Too many input arguments');NumButtons=3; %#ok
 end
-
-if isstruct(Default),
+if isempty(Default)
+    Default=Btn1;
+end
+    
+if isstruct(Default)
   Interpreter=Default.Interpreter;
   Default=Default.Default;
 end
@@ -381,7 +387,7 @@ set(IconAxes, ...
 movegui(QuestFig)
 
 
-set(QuestFig ,'WindowStyle','modal','Visible','on');
+set(QuestFig ,'WindowStyle','WindowStyle','Visible','on');
 drawnow;
 
 if DefaultButton ~= 0
