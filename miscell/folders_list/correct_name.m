@@ -6,6 +6,10 @@ if nargin<2
     max_char=30;
 end
 
+if iscell(prima)
+    prima=strjoin(prima);
+end
+
 if ~ischar(prima)
     error('L input deve essere un array')
 end
