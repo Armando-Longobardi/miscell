@@ -46,6 +46,6 @@ mouse.keyPress(KeyEvent.VK_ENTER);pause(3);
 mouse.keyPress(KeyEvent.VK_ENTER);
 
 % chiudi tutto
-system('taskkill /F /IM iexplore.exe','-echo')
+system('taskkill /F /IM iexplore.exe')
 
 end

@@ -6,7 +6,6 @@ end
     close_check=false;
     ext=[];
     nameOpt = 'figName';
-    corrName=false;
     
     Props={'CloseAll','SaveAs','NameAs','CorrectName'};
 for iInput= 1:2:numel(varargin)
@@ -16,11 +15,7 @@ for iInput= 1:2:numel(varargin)
         case 'SaveAs'
             ext=varargin{iInput+1};
         case 'NameAs'
-            
             nameOpt=validatestring(varargin{iInput+1},{'figName','Title'});
-            
-        case 'CorrectName'
-            corrName=varargin{iInput+1};
     end
 end
 
@@ -35,14 +30,15 @@ for i_fig=1:numfigs
                 partial_name=hands(i_fig).Name;
             case 'Title'
                 Axs=findobj(hands(i_fig),'Type','Axes');
-                partial_name=Axs.Title.String';
-                partial_name=regexprep(partial_name(:)',' *','_');
-            
+                partial_name=string(Axs.Title.String);
+                partial_name=char(strjoin(partial_name));
+                partial_name=regexprep(partial_name(:)',' *','_');           
         end
         
-        if corrName
-            partial_name=correct_name(partial_name,50);
-        end
+        partial_name=matlab.lang.makeValidName(partial_name);
+        partial_name=matlab.lang.makeUniqueStrings(partial_name,{},47);
+        
+
         
         figname=[save_folder,filesep,partial_name,'_',datestr(datetime,'yyyymmdd_HHMMSS')];
                 
