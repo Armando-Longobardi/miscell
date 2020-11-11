@@ -1,6 +1,6 @@
 function save_all_open_figs(save_folder,varargin)
 
-if nargin<1
+if nargin<1 || not(isfolder(save_folder))
     save_folder=uigetdir;
 end
     close_check=false;
