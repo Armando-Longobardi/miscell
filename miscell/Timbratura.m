@@ -1,4 +1,24 @@
-function Timbratura
+function varargout = Timbratura(askmode)
+% 1;  
+
+
+actualDir=fileparts(which(mfilename));
+
+if not(isfile([actualDir filesep 'lastTimbratura.Info']))
+    lastTimbratura=now-datenum(0,0,1);
+    save([actualDir filesep 'lastTimbratura.Info'],'lastTimbratura');
+else
+    load([actualDir filesep 'lastTimbratura.Info'],'lastTimbratura','-mat');
+end
+% lastTimbratura=now;
+if nargin>0 && askmode
+    varargout={lastTimbratura};
+    return
+else
+    varargout={};
+end
+
+
 % mex 'C:\Users\longoar001\Desktop\buffer\textInject.cc'
 import java.awt.Robot;
 import java.awt.event.*;
@@ -47,5 +67,9 @@ mouse.keyPress(KeyEvent.VK_ENTER);
 
 % chiudi tutto
 system('taskkill /F /IM iexplore.exe')
+clc
+
+lastTimbratura=now;
+save([actualDir filesep 'lastTimbratura.Info'],'lastTimbratura');
 
 end
