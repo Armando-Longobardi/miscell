@@ -1,6 +1,7 @@
 function varargout = Timbratura(askmode)
-% 1;  
-
+%  function varargout = Timbratura(askmode)
+% askmode == true => tells last timbratura;  
+% askmode == false => set 'now' as last timbratura (Timbratura manuale);  
 
 actualDir=fileparts(which(mfilename));
 
@@ -14,8 +15,11 @@ end
 if nargin>0 && askmode
     varargout={lastTimbratura};
     return
-else
+elseif nargin>0 && ~askmode
+    lastTimbratura=now;
+    save([actualDir filesep 'lastTimbratura.Info'],'lastTimbratura');
     varargout={};
+    return
 end
 
 
@@ -26,6 +30,16 @@ mouse = Robot;
 
 system('start iexplore http://lynda.it.pirelli.com:8112/irj/portal','-echo')
 pause(5)
+
+%TODO: setta finestra alla massima grandezza
+%      usa CMDOW, controllando di averlo come file e nel path di sistema
+%      oppure come alternativa usi mydialog per ingrandirlo oppure
+%      myDialog e fai fare all'utente
+% setx path "%path%;c:\directoryPath"
+% 
+
+%TODO: rendi parametrici le posizioni del mouse
+
 % elimina banner fine mese
 if day(datetime('today'))>=20    
     mouse.mouseMove(1348, 95);
