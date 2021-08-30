@@ -29,7 +29,7 @@ import java.awt.event.*;
 mouse = Robot;
 
 system('start iexplore http://lynda.it.pirelli.com:8112/irj/portal','-echo')
-pause(5)
+uiwait(mydialog)
 
 %TODO: setta finestra alla massima grandezza
 %      usa CMDOW, controllando di averlo come file e nel path di sistema
@@ -41,12 +41,12 @@ pause(5)
 %TODO: rendi parametrici le posizioni del mouse
 
 % elimina banner fine mese
-if day(datetime('today'))>=20    
-    mouse.mouseMove(1348, 95);
-    mouse.mousePress(InputEvent.BUTTON1_MASK);
-    mouse.mouseRelease(InputEvent.BUTTON1_MASK);
-    pause(1)
-end
+% if day(datetime('today'))>=20    
+%     mouse.mouseMove(1348, 95);
+%     mouse.mousePress(InputEvent.BUTTON1_MASK);
+%     mouse.mouseRelease(InputEvent.BUTTON1_MASK);
+%     pause(1)
+% end
 % apri menù a tendina
 mouse.mouseMove(45, 104);
 pause(2)
@@ -86,4 +86,18 @@ clc
 lastTimbratura=now;
 save([actualDir filesep 'lastTimbratura.Info'],'lastTimbratura');
 
+end
+
+function d=mydialog
+d = dialog('Position',[300 300 250 150],'Name','My Dialog','WindowStyle','normal');
+
+uicontrol('Parent',d,...
+    'Style','text',...
+    'Position',[20 80 210 40],...
+    'String','Maximize window and remove banner');
+
+uicontrol('Parent',d,...
+    'Position',[85 20 70 25],...
+    'String','Close',...
+    'Callback','delete(gcf)');
 end
