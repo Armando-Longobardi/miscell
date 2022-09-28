@@ -1,6 +1,6 @@
 function SendEmail(email)
 
-% email = 'armando.longobardi@pirelli.com';
+% email = 'armando.longobardi@goodyear.com';
 url = ['mailto:',email];
 web(url)
 

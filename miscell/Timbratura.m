@@ -28,7 +28,8 @@ import java.awt.Robot;
 import java.awt.event.*;
 mouse = Robot;
 
-system('start iexplore http://lynda.it.pirelli.com:8112/irj/portal','-echo')
+cmd='start iexplore http://';
+system(cmd,'-echo')
 uiwait(mydialog)
 
 %TODO: setta finestra alla massima grandezza
