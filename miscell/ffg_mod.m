@@ -15,17 +15,22 @@ end
 
 
 if isnumeric(data)
-    %% main
-if isempty(N)
-    N=length(data);
-end
-    fft_output=fft(data,N);
-    mod(2:round(N/2))=2/N*abs(fft_output(2:round(N/2)));
-    mod(1)=abs(mean(data));
-    freq=(1/dt)/N*(0:round(N/2-1));
-    fase(1)=atan2(0,mean(data));
-    fase(2:round(N/2))=atan2(imag(fft_output(2:round(N/2))),real(fft_output(2:round(N/2))));
-    
+    if isvector(data)
+        %% main
+        if isempty(N)
+            N=length(data);
+        end
+        fft_output=fft(data,N);
+        mod(2:round(N/2))=2/N*abs(fft_output(2:round(N/2)));
+        mod(1)=abs(mean(data));
+        freq=(1/dt)/N*(0:round(N/2-1));
+        fase(1)=atan2(0,mean(data));
+        fase(2:round(N/2))=atan2(imag(fft_output(2:round(N/2))),real(fft_output(2:round(N/2))));
+    else %assume you go by column
+        for iCol=1:size(data,2)
+            [mod(:,iCol),fase(:,iCol),freq,fft_output(:,iCol)]=ffg_mod(data(:,iCol),N,dt);
+        end
+    end
     
     
 elseif iscell(data)

@@ -8,30 +8,26 @@ if nargin == 0
 end
 
 WF=dir;
-j=1;
-k=1;
-
-WF_size=size(WF,1);
+folders=[];
 
 % files=cell([WF_size 1]);
 % folders=cell([WF_size 1]);
 
 for i=1:size(WF,1)
     
-    searching_folder=strfind(WF(i).name, '.' );
+    % searching_folder=strfind(WF(i).name, '.' );
     
-    if isempty(searching_folder)
-        folders(j,:) = cellstr(WF(i).name);
-        j=j+1;
-    else
-        files(k,:) = cellstr(WF(i).name);
-        k=k+1;
-    end
+    % if isempty(searching_folder)
+    %     folders(j,:) = cellstr(WF(i).name);
+    %     j=j+1;
+    % else
+    %     files(k,:) = cellstr(WF(i).name);
+    %     k=k+1;
+    % end
+    folders={WF([false,false,WF(3:end).isdir]).name}';
+    files={WF(~[false,false,WF(3:end).isdir]).name}';
 end
 
-if ~exist('folders')
-    folders=[];
-end
 
 end
 

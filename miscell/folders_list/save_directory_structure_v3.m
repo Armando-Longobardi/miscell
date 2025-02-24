@@ -10,7 +10,7 @@ cd(start);
 
 excel_dir=uigetdir(start,'Choose where the Excel will be created');
 %definisco automaticamente il nome dell'excel
-excel_name=correct_name(dir_name(start));
+excel_name=[correct_name(dir_name(start)),'.xlsx'];
 %% Cose Random
 %% Corpo principale
 %Richiamo la funzione che, per ricorsione, spero faccia tutto il lavoro

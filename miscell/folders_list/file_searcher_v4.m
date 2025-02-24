@@ -37,7 +37,7 @@ if nargin ==0
     target = 0;
 end
 
-if isempty(start)
+if isempty(start) || not(isfolder(start))
     start=cd;
 end
 
@@ -63,7 +63,7 @@ if indice(i_count)==0
     
     if ~isempty(excel_parent_sheet) && i_count>1
         excel_parent_sheet=correct_name(excel_parent_sheet);
-        files(2,1)=cellstr(strcat('=HYPERLINK("#',excel_parent_sheet, '!A', num2str(indice(i_count-1)+3), '";"' ,char(files(2)), '")' ));
+        files(2,1)=cellstr(strcat('=HYPERLINK("#',excel_parent_sheet, '!A', num2str(indice(i_count-1)+3), '","' ,char(files(2)), '")' ));
     end
     
     
@@ -73,7 +73,7 @@ if indice(i_count)==0
         %aggiungo il link tra cartella e propria sheet
         folder_links = cell(size(folders,1),1);
         for etabeta=1:size(folders,1)
-            folders_links(etabeta,1)=cellstr(strcat('=HYPERLINK("#', correct_name(char(folders(etabeta))) ,'!A1";"' ,char(folders(etabeta)), '")'));
+            folders_links(etabeta,1)=cellstr(strcat('=HYPERLINK("#', correct_name(char(folders(etabeta))) ,'!A1","' ,char(folders(etabeta)), '")'));
         end
         
         
@@ -81,13 +81,13 @@ if indice(i_count)==0
         excel_sheet_content=cellstr([local_path;' ';folders_links;' ';files]);
     end
     %salvo in excel, sempre nella stessa directory iniziale
-    warning('off','MATLAB:xlswrite:AddSheet');
+    % warning('off','MATLAB:xlswrite:AddSheet');
     
     cd(excel_dir)
-    xlswrite(excel_name,excel_sheet_content, excel_sheet_name);
+    writecell(excel_sheet_content,excel_name, 'Sheet',excel_sheet_name);
     cd(local_path)
     
-    warning('on','MATLAB:xlswrite:AddSheet');
+    % warning('on','MATLAB:xlswrite:AddSheet');
     
 end
 %checko se devo stopparmi

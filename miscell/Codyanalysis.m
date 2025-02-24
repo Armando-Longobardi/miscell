@@ -2,7 +2,7 @@ URL='https://it.mathworks.com/matlabcentral/cody/players?page=';
 
 Score=[];
 
-for iPage=1:100
+for iPage=1:20
     disp(iPage)
     WO=weboptions('Timeout',10);
 WR=webread([URL,num2str(iPage)],WO);
